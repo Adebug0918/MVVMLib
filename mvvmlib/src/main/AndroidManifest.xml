@@ -1,0 +1,24 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+    package="me.goldze.mvvmhabit">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application>
+        <activity
+            android:name="lxp.adebug.mvvmlib.base.ContainerActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true" />
+
+        <activity
+            android:name="lxp.adebug.mvvmlib.crash.DefaultErrorActivity"
+            android:exported="false"
+            android:process=":error_activity" />
+
+        <provider
+            android:name="lxp.adebug.mvvmlib.crash.CaocInitProvider"
+            android:authorities="${applicationId}.customactivityoncrashinitprovider"
+            android:exported="false"
+            android:initOrder="918" />
+    </application>
+
+</manifest>
