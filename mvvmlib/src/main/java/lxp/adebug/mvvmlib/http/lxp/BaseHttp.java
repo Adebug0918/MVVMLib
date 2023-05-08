@@ -14,6 +14,7 @@ import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import lxp.adebug.mvvmlib.base.BaseViewModel;
 import lxp.adebug.mvvmlib.http.httpCallBack.AbsAPICallback;
 import lxp.adebug.mvvmlib.http.httpCallBack.HttpInterface;
 import okhttp3.MediaType;
@@ -32,17 +33,20 @@ public class BaseHttp {
     private static String baseUrl = "";
     private static Map<String, Object> headers;
 
-    private BaseHttp() {
+    private BaseViewModel viewModel;
+
+    private BaseHttp(BaseViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 
-    public synchronized static BaseHttp getInstance() {
+    public synchronized static BaseHttp getInstance(BaseViewModel viewModel) {
         if (baseHttp == null) {
-            baseHttp = new BaseHttp();
+            baseHttp = new BaseHttp(viewModel);
         }
         return baseHttp;
     }
 
-    private static void init(@NonNull String baseUrl, @NonNull Map<String, Object> headers) {
+    public static void init(@NonNull String baseUrl, @NonNull Map<String, Object> headers) {
         BaseHttp.baseUrl = baseUrl;
         BaseHttp.headers = headers;
     }
@@ -52,6 +56,10 @@ public class BaseHttp {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(viewModel)
+                .doOnSubscribe(disposable -> {
+                    viewModel.showDialog("加载中...");
+                })
                 .subscribe(new AbsAPICallback<>(httpInterface));
     }
 
@@ -60,16 +68,24 @@ public class BaseHttp {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(viewModel)
+                .doOnSubscribe(disposable -> {
+                    viewModel.showDialog("加载中...");
+                })
                 .subscribe(new AbsAPICallback<>(httpInterface));
     }
 
     public void getJson(String link, Map<String, Object> map, HttpInterface httpInterface) {
         JSONObject jsonObject = new JSONObject(map);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),jsonObject.toString());
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
         BaseClient.getApi(baseUrl).baseGet(headers, link, body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(viewModel)
+                .doOnSubscribe(disposable -> {
+                    viewModel.showDialog("加载中...");
+                })
                 .subscribe(new AbsAPICallback<>(httpInterface));
     }
 
@@ -78,14 +94,22 @@ public class BaseHttp {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(viewModel)
+                .doOnSubscribe(disposable -> {
+                    viewModel.showDialog("加载中...");
+                })
                 .subscribe(new AbsAPICallback<>(httpInterface));
     }
 
-    public void post(String link,  Map<String, Object> map, HttpInterface httpInterface) {
+    public void post(String link, Map<String, Object> map, HttpInterface httpInterface) {
         BaseClient.getApi(baseUrl).basePost(headers, link, map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(viewModel)
+                .doOnSubscribe(disposable -> {
+                    viewModel.showDialog("加载中...");
+                })
                 .subscribe(new AbsAPICallback<>(httpInterface));
     }
 
@@ -96,6 +120,10 @@ public class BaseHttp {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(viewModel)
+                .doOnSubscribe(disposable -> {
+                    viewModel.showDialog("加载中...");
+                })
                 .subscribe(new AbsAPICallback<>(httpInterface));
     }
 
@@ -104,16 +132,24 @@ public class BaseHttp {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(viewModel)
+                .doOnSubscribe(disposable -> {
+                    viewModel.showDialog("加载中...");
+                })
                 .subscribe(new AbsAPICallback<>(httpInterface));
     }
 
     public void put(String link, Map<String, Object> map, HttpInterface httpInterface) {
         JSONObject jsonObject = new JSONObject(map);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),jsonObject.toString());
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
         BaseClient.getApi(baseUrl).basePut(headers, link, body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(viewModel)
+                .doOnSubscribe(disposable -> {
+                    viewModel.showDialog("加载中...");
+                })
                 .subscribe(new AbsAPICallback<>(httpInterface));
     }
 
@@ -129,6 +165,10 @@ public class BaseHttp {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(viewModel)
+                .doOnSubscribe(disposable -> {
+                    viewModel.showDialog("加载中...");
+                })
                 .subscribe(new AbsAPICallback<>(httpInterface));
     }
 
@@ -147,6 +187,10 @@ public class BaseHttp {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(viewModel)
+                .doOnSubscribe(disposable -> {
+                    viewModel.showDialog("加载中...");
+                })
                 .subscribe(new AbsAPICallback<>(httpInterface));
     }
 }
