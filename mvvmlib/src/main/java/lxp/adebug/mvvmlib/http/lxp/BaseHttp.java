@@ -28,9 +28,9 @@ import okhttp3.RequestBody;
 
 public class BaseHttp {
 
-    public static BaseHttp baseHttp;
-    private String baseUrl = "";
-    private Map<String, Object> headers;
+    private static BaseHttp baseHttp;
+    private static String baseUrl = "";
+    private static Map<String, Object> headers;
 
     private BaseHttp() {
     }
@@ -42,9 +42,9 @@ public class BaseHttp {
         return baseHttp;
     }
 
-    private void init(@NonNull String baseUrl, @NonNull Map<String, Object> headers) {
-        this.baseUrl = baseUrl;
-        this.headers = headers;
+    private static void init(@NonNull String baseUrl, @NonNull Map<String, Object> headers) {
+        BaseHttp.baseUrl = baseUrl;
+        BaseHttp.headers = headers;
     }
 
     public void get(String link, HttpInterface httpInterface) {
