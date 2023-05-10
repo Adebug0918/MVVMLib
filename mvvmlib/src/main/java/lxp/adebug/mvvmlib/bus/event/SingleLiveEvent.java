@@ -28,14 +28,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 /**
- * A lifecycle-aware observable that sends only new updates after subscription, used for events like
- * navigation and Snackbar messages.
+ * 一个生命周期感知的可观察对象，在订阅后只发送新的更新，用于诸如
+ * 导航和 Snackbar 消息。
  * <p>
- * This avoids a common problem with events: on configuration change (like rotation) an update
- * can be emitted if the observer is active. This LiveData only calls the observable if there's an
- * explicit call to setValue() or call().
+ * 这避免了事件的常见问题：在配置更改（如轮换）时更新
+ * 如果观察者处于活动状态，则可以发出。 这个 LiveData 只在有
+ * 显式调用 setValue() 或 call()。
  * <p>
- * Note that only one observer is going to be notified of changes.
+ * 请注意，只有一名观察员会收到更改通知。
  */
 public class SingleLiveEvent<T> extends MutableLiveData<T> {
     private static final String TAG = "SingleLiveEvent";
@@ -46,10 +46,10 @@ public class SingleLiveEvent<T> extends MutableLiveData<T> {
     public void observe(@NonNull LifecycleOwner owner, @NonNull final Observer<? super T> observer) {
 
         if (hasActiveObservers()) {
-            Log.w(TAG, "Multiple observers registered but only one will be notified of changes.");
+            Log.w(TAG, "多个观察员注册，但只有一个会收到更改通知。");
         }
 
-        // Observe the internal MutableLiveData
+        // 观察内部的 MutableLiveData
         super.observe(owner, new Observer<T>() {
             @Override
             public void onChanged(@Nullable T t) {
@@ -67,7 +67,7 @@ public class SingleLiveEvent<T> extends MutableLiveData<T> {
     }
 
     /**
-     * Used for cases where T is Void, to make calls cleaner.
+     * 用于 T 为 Void 的情况，以使调用更清晰。
      */
     @MainThread
     public void call() {

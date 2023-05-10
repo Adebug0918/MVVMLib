@@ -72,7 +72,7 @@ public final class CustomActivityOnCrash {
     //Internal variables
     @SuppressLint("StaticFieldLeak") //This is an application-wide component
     private static Application application;
-    private static CaocConfig config = new CaocConfig();
+    private static LibConfig config = new LibConfig();
     private static Deque<String> activityLog = new ArrayDeque<>(MAX_ACTIVITIES_IN_LOG);
     private static WeakReference<Activity> lastActivityCreated = new WeakReference<>(null);
     private static boolean isInBackground = true;
@@ -129,7 +129,7 @@ public final class CustomActivityOnCrash {
                                             oldHandler.uncaughtException(thread, throwable);
                                             return;
                                         }
-                                    } else if (config.getBackgroundMode() == CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM || !isInBackground) {
+                                    } else if (config.getBackgroundMode() == LibConfig.BACKGROUND_MODE_SHOW_CUSTOM || !isInBackground) {
 
                                         final Intent intent = new Intent(application, errorActivityClass);
                                         StringWriter sw = new StringWriter();
@@ -167,7 +167,7 @@ public final class CustomActivityOnCrash {
                                             config.getEventListener().onLaunchErrorActivity();
                                         }
                                         application.startActivity(intent);
-                                    } else if (config.getBackgroundMode() == CaocConfig.BACKGROUND_MODE_CRASH) {
+                                    } else if (config.getBackgroundMode() == LibConfig.BACKGROUND_MODE_CRASH) {
                                         if (oldHandler != null) {
                                             oldHandler.uncaughtException(thread, throwable);
                                             return;
@@ -274,8 +274,8 @@ public final class CustomActivityOnCrash {
      * @return The config, or null if not provided.
      */
     @NonNull
-    public static CaocConfig getConfigFromIntent(@NonNull Intent intent) {
-        return (CaocConfig) intent.getSerializableExtra(CustomActivityOnCrash.EXTRA_CONFIG);
+    public static LibConfig getConfigFromIntent(@NonNull Intent intent) {
+        return (LibConfig) intent.getSerializableExtra(CustomActivityOnCrash.EXTRA_CONFIG);
     }
 
     /**
@@ -343,7 +343,7 @@ public final class CustomActivityOnCrash {
      * @param intent   The Intent. Must not be null.
      * @param config   The config object as obtained by calling getConfigFromIntent.
      */
-    public static void restartApplicationWithIntent(@NonNull Activity activity, @NonNull Intent intent, @NonNull CaocConfig config) {
+    public static void restartApplicationWithIntent(@NonNull Activity activity, @NonNull Intent intent, @NonNull LibConfig config) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         if (intent.getComponent() != null) {
             //If the class name has been set, we force it to simulate a Launcher launch.
@@ -362,7 +362,7 @@ public final class CustomActivityOnCrash {
         killCurrentProcess();
     }
 
-    public static void restartApplication(@NonNull Activity activity, @NonNull CaocConfig config) {
+    public static void restartApplication(@NonNull Activity activity, @NonNull LibConfig config) {
         Intent intent = new Intent(activity, config.getRestartActivityClass());
         restartApplicationWithIntent(activity, intent, config);
     }
@@ -375,7 +375,7 @@ public final class CustomActivityOnCrash {
      * @param activity The current error activity. Must not be null.
      * @param config   The config object as obtained by calling getConfigFromIntent.
      */
-    public static void closeApplication(@NonNull Activity activity, @NonNull CaocConfig config) {
+    public static void closeApplication(@NonNull Activity activity, @NonNull LibConfig config) {
         if (config.getEventListener() != null) {
             config.getEventListener().onCloseAppFromErrorActivity();
         }
@@ -393,7 +393,7 @@ public final class CustomActivityOnCrash {
      */
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     @NonNull
-    public static CaocConfig getConfig() {
+    public static LibConfig getConfig() {
         return config;
     }
 
@@ -404,7 +404,7 @@ public final class CustomActivityOnCrash {
      * @param config the configuration to use
      */
     @RestrictTo(RestrictTo.Scope.LIBRARY)
-    public static void setConfig(@NonNull CaocConfig config) {
+    public static void setConfig(@NonNull LibConfig config) {
         CustomActivityOnCrash.config = config;
     }
 

@@ -28,7 +28,9 @@ import retrofit2.http.Url;
 
 
 /**
- * Created by lxp on 2016/4/19.
+ *
+ * @author lxp
+ * @date 2016/4/19
  */
 public interface BaseApi {
 

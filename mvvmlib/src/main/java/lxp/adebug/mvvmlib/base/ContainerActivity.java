@@ -52,13 +52,12 @@ public class ContainerActivity extends RxAppCompatActivity {
 
     protected Fragment initFromIntent(Intent data) {
         if (data == null) {
-            throw new RuntimeException(
-                    "you must provide a page info to display");
+            throw new RuntimeException("您必须提供要显示的页面信息");
         }
         try {
             String fragmentName = data.getStringExtra(FRAGMENT);
             if (fragmentName == null || "".equals(fragmentName)) {
-                throw new IllegalArgumentException("can not find page fragmentName");
+                throw new IllegalArgumentException("找不到页面fragment名称");
             }
             Class<?> fragmentClass = Class.forName(fragmentName);
             Fragment fragment = (Fragment) fragmentClass.newInstance();
@@ -74,7 +73,7 @@ public class ContainerActivity extends RxAppCompatActivity {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        throw new RuntimeException("fragment initialization failed!");
+        throw new RuntimeException("fragment 初始化失败！");
     }
 
     @Override

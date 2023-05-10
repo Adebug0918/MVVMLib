@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import lxp.adebug.mvvmlib.utils.Utils;
 
 /**
- * Created by goldze on 2017/6/15.
+ *
+ * @author goldze
+ * @date 2017/6/15
  */
 
 public class BaseApplication extends Application {

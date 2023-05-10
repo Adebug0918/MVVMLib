@@ -7,10 +7,11 @@ import java.util.Stack;
 import androidx.fragment.app.Fragment;
 
 /**
- * Created by goldze on 2017/6/15.
  * activity堆栈式管理
+ * @author Adebug
  */
 public class AppManager {
+
 
     private static Stack<Activity> activityStack;
     private static Stack<Fragment> fragmentStack;

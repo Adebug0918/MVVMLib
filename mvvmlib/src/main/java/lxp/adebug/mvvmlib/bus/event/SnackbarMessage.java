@@ -22,10 +22,11 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
 /**
- * A SingleLiveEvent used for Snackbar messages. Like a {@link SingleLiveEvent} but also prevents
- * null messages and uses a custom observer.
+ * 翻译结果
+ * 用于 Snackbar 消息的 SingleLiveEvent。 像 {@link SingleLiveEvent} 但也可以防止
+ * 空消息并使用自定义观察者。
  * <p>
- * Note that only one observer is going to be notified of changes.
+ * 请注意，只有一名观察员会收到更改通知。
  */
 public class SnackbarMessage extends SingleLiveEvent<Integer> {
 
@@ -43,8 +44,8 @@ public class SnackbarMessage extends SingleLiveEvent<Integer> {
 
     public interface SnackbarObserver {
         /**
-         * Called when there is a new message to be shown.
-         * @param snackbarMessageResourceId The new message, non-null.
+         * 当有新消息显示时调用。
+         * @param snackbarMessageResourceId 新消息，非空。
          */
         void onNewMessage(@StringRes int snackbarMessageResourceId);
     }

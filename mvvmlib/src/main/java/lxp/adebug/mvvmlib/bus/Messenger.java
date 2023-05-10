@@ -38,48 +38,44 @@ public class Messenger {
     }
 
     /**
-     * @param recipient the receiver,if register in activity the recipient always set "this",
-     *                  and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
-     *                  you can also register with Activity context and also in onDestroy to unregister.
-     * @param action    do something on message received
+     * @param recipient 接收者，如果在活动中注册，接收者总是设置“this”，
+     *                  和 onDestroy 中的“WeakMessenger.getDefault().unregister(this)”，如果在 ViewModel 中，
+     *                  你也可以在 Activity 上下文中注册，也可以在 onDestroy 中注销。
+     * @param action    对接收到的消息做一些事情
      */
     public void register(Object recipient, BindingAction action) {
         register(recipient, null, false, action);
     }
 
     /**
-     * @param recipient                 the receiver,if register in activity the recipient always set "this",
-     *                                  and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
-     *                                  you can also register with Activity context and also in onDestroy to unregister.
-     * @param receiveDerivedMessagesToo whether Derived class of recipient can receive the message
-     * @param action                    do something on message received
+     * @param recipient                 接收者，如果在活动中注册，接收者总是设置“this”，
+     *                                  和 onDestroy 中的“WeakMessenger.getDefault().unregister(this)”，如果在 ViewModel 中，
+     *                                  你也可以在 Activity 上下文中注册，也可以在 onDestroy 中注销。
+     * @param receiveDerivedMessagesToo 接收者的派生类是否可以接收消息
+     * @param action                    对接收到的消息做一些事情
      */
     public void register(Object recipient, boolean receiveDerivedMessagesToo, BindingAction action) {
         register(recipient, null, receiveDerivedMessagesToo, action);
     }
 
     /**
-     * @param recipient the receiver,if register in activity the recipient always set "this",
-     *                  and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
-     *                  you can also register with Activity context and also in onDestroy to unregister.
-     * @param token     register with a unique token,when a messenger send a msg with same token,it
-     *                  will
-     *                  receive this msg
-     * @param action    do something on message received
+     * @param recipient 接收者，如果在活动中注册，接收者总是设置“this”，
+     *                  和 onDestroy 中的“WeakMessenger.getDefault().unregister(this)”，如果在 ViewModel 中，
+     *                  你也可以在 Activity 上下文中注册，也可以在 onDestroy 中注销。
+     * @param token     注册一个唯一的token，当一个messenger发送一条带有相同token的消息时，它将要接收此消息
+     * @param action    对接收到的消息做一些事情
      */
     public void register(Object recipient, Object token, BindingAction action) {
         register(recipient, token, false, action);
     }
 
     /**
-     * @param recipient                 the receiver,if register in activity the recipient always set "this",
-     *                                  and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
-     *                                  you can also register with Activity context and also in onDestroy to unregister.
-     * @param token                     register with a unique token,when a messenger send a msg with same token,it
-     *                                  will
-     *                                  receive this msg
-     * @param receiveDerivedMessagesToo whether Derived class of recipient can receive the message
-     * @param action                    do something on message received
+     * @param recipient                 接收者，如果在活动中注册，接收者总是设置“this”，
+     *                                  和 onDestroy 中的“WeakMessenger.getDefault().unregister(this)”，如果在 ViewModel 中，
+     *                                  你也可以在 Activity 上下文中注册，也可以在 onDestroy 中注销。
+     * @param token                     注册一个唯一的token，当一个messenger发送一条带有相同token的消息时，它将要接收此消息
+     * @param receiveDerivedMessagesToo 接收者的派生类是否可以接收消息
+     * @param action                    对接收到的消息做一些事情
      */
     public void register(Object recipient, Object token, boolean receiveDerivedMessagesToo, BindingAction action) {
 
@@ -118,10 +114,10 @@ public class Messenger {
     }
 
     /**
-     * @param recipient {}
-     * @param tClass    class of T
-     * @param action    this action has one params that type of tClass
-     * @param <T>       message data type
+     * @param recipient{}
+     * @param tClass      T 类
+     * @param action      这个动作有一个 tClass 类型的参数
+     * @param <T>         消息数据类型
      */
     public <T> void register(Object recipient, Class<T> tClass, BindingConsumer<T> action) {
         register(recipient, null, false, action, tClass);
@@ -130,11 +126,11 @@ public class Messenger {
     /**
      * see {}
      *
-     * @param recipient                 receiver of message
-     * @param receiveDerivedMessagesToo whether derived class of recipient can receive the message
-     * @param tClass                    class of T
-     * @param action                    this action has one params that type of tClass
-     * @param <T>                       message data type
+     * @param recipient                 消息接收者
+     * @param receiveDerivedMessagesToo 收件人的派生类是否可以收到消息
+     * @param tClass                    T类
+     * @param action                    这个动作有一个 tClass 类型的参数
+     * @param <T>                       消息数据类型
      */
     public <T> void register(Object recipient, boolean receiveDerivedMessagesToo, Class<T> tClass, BindingConsumer<T> action) {
         register(recipient, null, receiveDerivedMessagesToo, action, tClass);
@@ -143,13 +139,11 @@ public class Messenger {
     /**
      * see {}
      *
-     * @param recipient receiver of message
-     * @param token     register with a unique token,when a messenger send a msg with same token,it
-     *                  will
-     *                  receive this msg
-     * @param tClass    class of T for BindingConsumer
-     * @param action    this action has one params that type of tClass
-     * @param <T>       message data type
+     * @param recipient 消息接收者
+     * @param token     使用唯一令牌注册，当信使发送具有相同令牌的消息时，它将要收到这条信息
+     * @param tClass    BindingConsumer 的 T 类
+     * @param action    这个动作有一个 tClass 类型的参数
+     * @param <T>       消息数据类型
      */
     public <T> void register(Object recipient, Object token, Class<T> tClass, BindingConsumer<T> action) {
         register(recipient, token, false, action, tClass);
@@ -158,14 +152,12 @@ public class Messenger {
     /**
      * see {}
      *
-     * @param recipient                 receiver of message
-     * @param token                     register with a unique token,when a messenger send a msg with same token,it
-     *                                  will
-     *                                  receive this msg
-     * @param receiveDerivedMessagesToo whether derived class of recipient can receive the message
-     * @param action                    this action has one params that type of tClass
-     * @param tClass                    class of T for BindingConsumer
-     * @param <T>                       message data type
+     * @param recipient                 消息接收者
+     * @param token                     使用唯一令牌注册，当信使发送具有相同令牌的消息时，它将要收到这条信息
+     * @param receiveDerivedMessagesToo 收件人的派生类是否可以收到消息
+     * @param action                    这个动作有一个 tClass 类型的参数
+     * @param tClass                    BindingConsumer 的 T 类
+     * @param <T>                       消息数据类型
      */
     public <T> void register(Object recipient, Object token, boolean receiveDerivedMessagesToo, BindingConsumer<T> action, Class<T> tClass) {
 
@@ -210,81 +202,79 @@ public class Messenger {
     }
 
     /**
-     * @param token send with a unique token,when a receiver has register with same token,it will
-     *              receive this msg
+     * @param token 使用唯一令牌发送，当接收方使用相同令牌注册时，它将收到这条信息
      */
     public void sendNoMsg(Object token) {
         sendToTargetOrType(null, token);
     }
 
     /**
-     * send to recipient directly with has not any message
+     * 直接发送给收件人没有任何消息
      *
-     * @param target WeakMessenger.getDefault().register(this, ..) in a activity,if target set this
-     *               activity
-     *               it will receive the message
+     * @param target WeakMessenger.getDefault().register(this, ..)
+     *               在活动中，如果目标设置为活动它会收到消息
      */
     public void sendNoMsgToTarget(Object target) {
         sendToTargetOrType(target.getClass(), null);
     }
 
     /**
-     * send message to target with token,when a receiver has register with same token,it will
-     * receive this msg
+     * 使用令牌向目标发送消息，当接收者使用相同的令牌注册时，它将
+     * 收到这条信息
      *
-     * @param token  send with a unique token,when a receiver has register with same token,it will
-     *               receive this msg
-     * @param target send to recipient directly with has not any message,
-     *               WeakMessenger.getDefault().register(this, ..) in a activity,if target set this activity
-     *               it will receive the message
+     * @param token  使用唯一令牌发送，当接收方使用相同令牌注册时，它将
+     *               接收此消息
+     * @param target 直接发送给收件人没有任何消息，
+     *               WeakMessenger.getDefault().register(this, ..) 在一个活动中，如果目标设置了这个活动
+     *               它会收到消息
      */
     public void sendNoMsgToTargetWithToken(Object token, Object target) {
         sendToTargetOrType(target.getClass(), token);
     }
 
     /**
-     * send the message type of T, all receiver can receive the message
+     * 发送T的消息类型，所有接收者都能收到该消息
      *
-     * @param message any object can to be a message
-     * @param <T>     message data type
+     * @param message 任何对象都可以是消息
+     * @param <T>       消息数据类型
      */
     public <T> void send(T message) {
         sendToTargetOrType(message, null, null);
     }
 
     /**
-     * send the message type of T, all receiver can receive the message
+     * 发送T的消息类型，所有接收者都能收到该消息
      *
-     * @param message any object can to be a message
-     * @param token   send with a unique token,when a receiver has register with same token,it will
-     *                receive this message
-     * @param <T>     message data type
+     * @param message 任何对象都可以是消息
+     * @param token   使用唯一令牌发送，当接收方使用相同令牌注册时，它将
+     *                收到这条信息
+     * @param <T>     消息数据类型
      */
     public <T> void send(T message, Object token) {
         sendToTargetOrType(message, null, token);
     }
 
     /**
-     * send message to recipient directly
+     * 直接发送消息给收件人
      *
-     * @param message any object can to be a message
-     * @param target  send to recipient directly with has not any message,
-     *                WeakMessenger.getDefault().register(this, ..) in a activity,if target set this activity
-     *                it will receive the message
-     * @param <T>     message data type
-     * @param <R>     target
+     * @param message 任何对象都可以是消息
+     * @param target  直接发送给收件人没有任何消息，
+     *                WeakMessenger.getDefault().register(this, ..) 在一个活动中，如果目标设置了这个活动
+     *                它会收到消息
+     * @param <T>     消息数据类型
+     * @param <R>     目标
      */
     public <T, R> void sendToTarget(T message, R target) {
         sendToTargetOrType(message, target.getClass(), null);
     }
 
     /**
-     * Unregister the receiver such as:
-     * WeakMessenger.getDefault().unregister(this)" in onDestroy in the Activity is required avoid
-     * to
-     * memory leak!
+     * 注销接收器，例如：
+     * WeakMessenger.getDefault().unregister(this)" 在 onDestroy 中的 Activity 是需要避免的
+     * 到内存泄漏！
      *
-     * @param recipient receiver of message
+     *
+     * @param recipient 消息接收者
      */
     public void unregister(Object recipient) {
         unregisterFromLists(recipient, recipientsOfSubclassesAction);
@@ -306,8 +296,8 @@ public class Messenger {
             Type messageTargetType,
             Object token) {
         if (list != null) {
-            // Clone to protect from people registering in a "receive message" method
-            // Bug correction Messaging BL0004.007
+            // 克隆以防止人们在“接收消息”方法中注册
+            // 错误修正消息 BL0004.007
             ArrayList<WeakActionAndToken> listClone = new ArrayList<>();
             listClone.addAll(list);
 
@@ -504,9 +494,9 @@ public class Messenger {
     private void sendToTargetOrType(Type messageTargetType, Object token) {
         Class messageType = NotMsgType.class;
         if (recipientsOfSubclassesAction != null) {
-            // Clone to protect from people registering in a "receive message" method
-            // Bug correction Messaging BL0008.002
-//            var listClone = recipientsOfSubclassesAction.Keys.Take(_recipientsOfSubclassesAction.Count()).ToList();
+            // 克隆以防止人们在“接收消息”方法中注册
+            // 错误修正消息 BL0008.002
+            // var listClone = recipientsOfSubclassesAction.Keys.Take(_recipientsOfSubclassesAction.Count()).ToList();
             List<Type> listClone = new ArrayList<>();
             listClone.addAll(recipientsOfSubclassesAction.keySet());
             for (Type type : listClone) {
@@ -537,8 +527,8 @@ public class Messenger {
             Type messageTargetType,
             Object token) {
         if (list != null) {
-            // Clone to protect from people registering in a "receive message" method
-            // Bug correction Messaging BL0004.007
+            // 克隆以防止人们在“接收消息”方法中注册
+            // 错误修正消息 BL0004.007
             ArrayList<WeakActionAndToken> listClone = new ArrayList<>();
             listClone.addAll(list);
 
@@ -563,9 +553,9 @@ public class Messenger {
 
 
         if (recipientsOfSubclassesAction != null) {
-            // Clone to protect from people registering in a "receive message" method
-            // Bug correction Messaging BL0008.002
-//            var listClone = recipientsOfSubclassesAction.Keys.Take(_recipientsOfSubclassesAction.Count()).ToList();
+            // 克隆以防止人们在“接收消息”方法中注册
+            // 错误修正消息 BL0008.002
+            // var listClone = recipientsOfSubclassesAction.Keys.Take(_recipientsOfSubclassesAction.Count()).ToList();
             List<Type> listClone = new ArrayList<>();
             listClone.addAll(recipientsOfSubclassesAction.keySet());
             for (Type type : listClone) {

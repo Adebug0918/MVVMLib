@@ -68,7 +68,7 @@ public class BaseViewModel<M extends BaseModel> extends AndroidViewModel impleme
     }
 
     public void showDialog() {
-        showDialog("请稍后...");
+        showDialog("Loading...");
     }
 
     public void showDialog(String title) {

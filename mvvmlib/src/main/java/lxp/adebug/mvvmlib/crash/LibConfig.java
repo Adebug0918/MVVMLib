@@ -29,7 +29,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-public class CaocConfig implements Serializable {
+/**
+ * @author Adebug
+ * 初始化配置文件
+ */
+public class LibConfig implements Serializable {
 
     @IntDef({BACKGROUND_MODE_CRASH, BACKGROUND_MODE_SHOW_CUSTOM, BACKGROUND_MODE_SILENT})
     @Retention(RetentionPolicy.SOURCE)
@@ -139,14 +143,14 @@ public class CaocConfig implements Serializable {
     }
 
     public static class Builder {
-        private CaocConfig config;
+        private LibConfig config;
 
         @NonNull
         public static Builder create() {
             Builder builder = new Builder();
-            CaocConfig currentConfig = CustomActivityOnCrash.getConfig();
+            LibConfig currentConfig = CustomActivityOnCrash.getConfig();
 
-            CaocConfig config = new CaocConfig();
+            LibConfig config = new LibConfig();
             config.backgroundMode = currentConfig.backgroundMode;
             config.enabled = currentConfig.enabled;
             config.showErrorDetails = currentConfig.showErrorDetails;
@@ -288,7 +292,7 @@ public class CaocConfig implements Serializable {
         }
 
         @NonNull
-        public CaocConfig get() {
+        public LibConfig get() {
             return config;
         }
 

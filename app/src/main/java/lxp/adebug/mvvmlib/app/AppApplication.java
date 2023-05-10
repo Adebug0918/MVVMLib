@@ -1,16 +1,24 @@
 package lxp.adebug.mvvmlib.app;
 
+import android.os.Build;
+
 import com.goldze.mvvmhabit.BuildConfig;
 import com.goldze.mvvmhabit.R;
+
+import lxp.adebug.mvvmlib.http.lxp.BaseHttp;
 import lxp.adebug.mvvmlib.ui.login.LoginActivity;
 import com.squareup.leakcanary.LeakCanary;
 
+import java.util.HashMap;
+
 import lxp.adebug.mvvmlib.base.BaseApplication;
-import lxp.adebug.mvvmlib.crash.CaocConfig;
+import lxp.adebug.mvvmlib.crash.LibConfig;
 import lxp.adebug.mvvmlib.utils.KLog;
 
 /**
- * Created by goldze on 2017/7/16.
+ *
+ * @author Adebug
+ * @date 2017/7/16
  */
 
 public class AppApplication extends BaseApplication {
@@ -28,8 +36,8 @@ public class AppApplication extends BaseApplication {
     }
 
     private void initCrash() {
-        CaocConfig.Builder.create()
-                .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //背景模式,开启沉浸式
+        LibConfig.Builder.create()
+                .backgroundMode(LibConfig.BACKGROUND_MODE_SILENT) //背景模式,开启沉浸式
                 .enabled(true) //是否启动全局异常捕获
                 .showErrorDetails(true) //是否显示错误详细信息
                 .showRestartButton(true) //是否显示重启按钮
@@ -40,5 +48,13 @@ public class AppApplication extends BaseApplication {
 //                .errorActivity(YourCustomErrorActivity.class) //崩溃后的错误activity
 //                .eventListener(new YourCustomEventListener()) //崩溃后的错误监听
                 .apply();
+        HashMap<String,Object> header = new HashMap<>();
+        header.put("model", Build.MODEL);
+        header.put("brand",Build.BRAND);
+        header.put("release",Build.VERSION.RELEASE);
+        header.put("hardware",Build.HARDWARE);
+        header.put("custom","custom");
+        header.put("Token","token");
+        BaseHttp.init("https://www.baidu.com",header);
     }
 }

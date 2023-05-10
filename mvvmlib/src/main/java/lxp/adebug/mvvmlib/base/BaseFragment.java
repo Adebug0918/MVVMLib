@@ -25,7 +25,9 @@ import lxp.adebug.mvvmlib.bus.Messenger;
 import lxp.adebug.mvvmlib.utils.MaterialDialogUtils;
 
 /**
- * Created by goldze on 2017/6/15.
+ *
+ * @author goldze
+ * @date 2017/6/15
  */
 public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseView {
     protected V binding;
