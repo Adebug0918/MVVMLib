@@ -15,8 +15,8 @@ import lxp.adebug.mvvmlib.binding.command.BindingCommand;
  */
 
 public class ViewAdapter {
-    //防重复点击间隔(秒)
-    public static final int CLICK_INTERVAL = 1;
+    //防重复点击间隔(毫秒)
+    public static final int CLICK_INTERVAL = 800;
 
     /**
      * requireAll 是意思是是否需要绑定全部参数, false为否
@@ -38,7 +38,7 @@ public class ViewAdapter {
                     });
         } else {
             RxView.clicks(view)
-                    .throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
+                    .throttleFirst(CLICK_INTERVAL, TimeUnit.MICROSECONDS)//800毫秒内只允许点击1次
                     .subscribe(new Consumer<Object>() {
                         @Override
                         public void accept(Object object) throws Exception {

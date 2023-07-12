@@ -6,8 +6,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import lxp.adebug.mvvmlib.http.BaseResponse;
-import lxp.adebug.mvvmlib.utils.GsonUtil;
+import lxp.adebug.mvvmlib.base.BaseApplication;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
@@ -23,11 +22,11 @@ public class StringResponseBodyConverter implements Converter<ResponseBody, Stri
         try {
             String response = value.string();
             JSONObject jsonObject = new JSONObject(response);
-            if (jsonObject.getInt("code") == 200 ) {
+            if (jsonObject.getInt(BaseApplication.fieldCode) == BaseApplication.httpCode) {
                 return response;
             } else {
-                BaseResponse errResponse = GsonUtil.parseJson(response, BaseResponse.class);
-                throw new ResultException(errResponse.getCode(), errResponse.getMessage());
+                JSONObject errJsonObject = new JSONObject(response);
+                throw new ResultException(errJsonObject.getInt(BaseApplication.fieldCode), errJsonObject.getString(BaseApplication.fieldMessage));
             }
         } catch (JSONException e) {
             e.printStackTrace();

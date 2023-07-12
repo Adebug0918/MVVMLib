@@ -3,7 +3,7 @@
     package="me.goldze.mvvmhabit">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <application>
+    <application android:allowBackup="false">
         <activity
             android:name="lxp.adebug.mvvmlib.base.ContainerActivity"
             android:configChanges="orientation|keyboardHidden"

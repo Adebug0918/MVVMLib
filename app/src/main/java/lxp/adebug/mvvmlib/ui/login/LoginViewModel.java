@@ -2,14 +2,15 @@ package lxp.adebug.mvvmlib.ui.login;
 
 import android.app.Application;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-
-import lxp.adebug.mvvmlib.data.DemoRepository;
-import lxp.adebug.mvvmlib.ui.main.DemoActivity;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
+
+import java.util.HashMap;
+
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import lxp.adebug.mvvmlib.base.BaseViewModel;
@@ -17,6 +18,12 @@ import lxp.adebug.mvvmlib.binding.command.BindingAction;
 import lxp.adebug.mvvmlib.binding.command.BindingCommand;
 import lxp.adebug.mvvmlib.binding.command.BindingConsumer;
 import lxp.adebug.mvvmlib.bus.event.SingleLiveEvent;
+import lxp.adebug.mvvmlib.data.DemoRepository;
+import lxp.adebug.mvvmlib.http.BaseResponse;
+import lxp.adebug.mvvmlib.http.httpCallBack.HttpInterface;
+import lxp.adebug.mvvmlib.http.lxp.BaseHttp;
+import lxp.adebug.mvvmlib.ui.main.DemoActivity;
+import lxp.adebug.mvvmlib.utils.GsonUtil;
 import lxp.adebug.mvvmlib.utils.RxUtils;
 import lxp.adebug.mvvmlib.utils.ToastUtils;
 
@@ -114,7 +121,15 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
                         finish();
                     }
                 }));
-
+//        HashMap<String, Object> map = new HashMap<>();
+//        map.put("参数名", "传值");
+//        BaseHttp.getInstance(this).post("接口路径", true, map, new HttpInterface() {
+//            @Override
+//            public void onSuccess(String data) {
+//                BaseResponse response = GsonUtil.parseJson(data, BaseResponse.class);
+//                Log.i("TAG", "onSuccess: " + response.getResult());
+//            }
+//        });
     }
 
     @Override

@@ -15,6 +15,9 @@ import lxp.adebug.mvvmlib.utils.Utils;
 
 public class BaseApplication extends Application {
     private static Application sInstance;
+    public static int httpCode = 200;
+    public static String fieldCode = "code";
+    public static String fieldMessage = "message";
 
     @Override
     public void onCreate() {

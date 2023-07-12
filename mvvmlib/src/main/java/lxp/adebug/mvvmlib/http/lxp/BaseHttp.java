@@ -51,31 +51,35 @@ public class BaseHttp {
         BaseHttp.headers = headers;
     }
 
-    public void get(String link, HttpInterface httpInterface) {
+    public void get(String link,boolean showDialog, HttpInterface httpInterface) {
         BaseClient.getApi(baseUrl).baseGet(headers, link)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(viewModel)
                 .doOnSubscribe(disposable -> {
-                    viewModel.showDialog("加载中...");
+                    if (showDialog) {
+                        viewModel.showDialog("加载中...");
+                    }
                 })
-                .subscribe(new AbsAPICallback<>(httpInterface));
+                .subscribe(new AbsAPICallback<>(httpInterface,viewModel));
     }
 
-    public void get(String link, Map<String, Object> map, HttpInterface httpInterface) {
+    public void get(String link,boolean showDialog, Map<String, Object> map, HttpInterface httpInterface) {
         BaseClient.getApi(baseUrl).baseGet(headers, link, map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(viewModel)
                 .doOnSubscribe(disposable -> {
-                    viewModel.showDialog("加载中...");
+                    if (showDialog) {
+                        viewModel.showDialog("加载中...");
+                    }
                 })
-                .subscribe(new AbsAPICallback<>(httpInterface));
+                .subscribe(new AbsAPICallback<>(httpInterface,viewModel));
     }
 
-    public void getJson(String link, Map<String, Object> map, HttpInterface httpInterface) {
+    public void getJson(String link,boolean showDialog, Map<String, Object> map, HttpInterface httpInterface) {
         JSONObject jsonObject = new JSONObject(map);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
         BaseClient.getApi(baseUrl).baseGet(headers, link, body)
@@ -84,36 +88,42 @@ public class BaseHttp {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(viewModel)
                 .doOnSubscribe(disposable -> {
-                    viewModel.showDialog("加载中...");
+                    if (showDialog) {
+                        viewModel.showDialog("加载中...");
+                    }
                 })
-                .subscribe(new AbsAPICallback<>(httpInterface));
+                .subscribe(new AbsAPICallback<>(httpInterface,viewModel));
     }
 
-    public void post(String link, HttpInterface httpInterface) {
+    public void post(String link,boolean showDialog, HttpInterface httpInterface) {
         BaseClient.getApi(baseUrl).basePost(headers, link)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(viewModel)
                 .doOnSubscribe(disposable -> {
-                    viewModel.showDialog("加载中...");
+                    if (showDialog) {
+                        viewModel.showDialog("加载中...");
+                    }
                 })
-                .subscribe(new AbsAPICallback<>(httpInterface));
+                .subscribe(new AbsAPICallback<>(httpInterface,viewModel));
     }
 
-    public void post(String link, Map<String, Object> map, HttpInterface httpInterface) {
+    public void post(String link,boolean showDialog, Map<String, Object> map, HttpInterface httpInterface) {
         BaseClient.getApi(baseUrl).basePost(headers, link, map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(viewModel)
                 .doOnSubscribe(disposable -> {
-                    viewModel.showDialog("加载中...");
+                    if (showDialog) {
+                        viewModel.showDialog("加载中...");
+                    }
                 })
-                .subscribe(new AbsAPICallback<>(httpInterface));
+                .subscribe(new AbsAPICallback<>(httpInterface,viewModel));
     }
 
-    public void postJson(String link, Map<String, Object> map, HttpInterface httpInterface) {
+    public void postJson(String link,boolean showDialog, Map<String, Object> map, HttpInterface httpInterface) {
         JSONObject jsonObject = new JSONObject(map);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
         BaseClient.getApi(baseUrl).basePost(headers, link, body)
@@ -122,24 +132,28 @@ public class BaseHttp {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(viewModel)
                 .doOnSubscribe(disposable -> {
-                    viewModel.showDialog("加载中...");
+                    if (showDialog) {
+                        viewModel.showDialog("加载中...");
+                    }
                 })
-                .subscribe(new AbsAPICallback<>(httpInterface));
+                .subscribe(new AbsAPICallback<>(httpInterface,viewModel));
     }
 
-    public void delete(String link, HttpInterface httpInterface) {
+    public void delete(String link,boolean showDialog, HttpInterface httpInterface) {
         BaseClient.getApi(baseUrl).baseDelete(headers, link)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(viewModel)
                 .doOnSubscribe(disposable -> {
-                    viewModel.showDialog("加载中...");
+                    if (showDialog) {
+                        viewModel.showDialog("加载中...");
+                    }
                 })
-                .subscribe(new AbsAPICallback<>(httpInterface));
+                .subscribe(new AbsAPICallback<>(httpInterface,viewModel));
     }
 
-    public void put(String link, Map<String, Object> map, HttpInterface httpInterface) {
+    public void put(String link,boolean showDialog, Map<String, Object> map, HttpInterface httpInterface) {
         JSONObject jsonObject = new JSONObject(map);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
         BaseClient.getApi(baseUrl).basePut(headers, link, body)
@@ -148,13 +162,15 @@ public class BaseHttp {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(viewModel)
                 .doOnSubscribe(disposable -> {
-                    viewModel.showDialog("加载中...");
+                    if (showDialog) {
+                        viewModel.showDialog("加载中...");
+                    }
                 })
-                .subscribe(new AbsAPICallback<>(httpInterface));
+                .subscribe(new AbsAPICallback<>(httpInterface,viewModel));
     }
 
 
-    public void upload(String link, String param, String filepath, HttpInterface httpInterface) {
+    public void upload(String link,boolean showDialog, String param, String filepath, HttpInterface httpInterface) {
         if (TextUtils.isEmpty(filepath)) {
             return;
         }
@@ -167,12 +183,14 @@ public class BaseHttp {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(viewModel)
                 .doOnSubscribe(disposable -> {
-                    viewModel.showDialog("加载中...");
+                    if (showDialog) {
+                        viewModel.showDialog("加载中...");
+                    }
                 })
-                .subscribe(new AbsAPICallback<>(httpInterface));
+                .subscribe(new AbsAPICallback<>(httpInterface,viewModel));
     }
 
-    public void uploads(String link, String param, List<String> pathList, HttpInterface httpInterface) {
+    public void uploads(String link,boolean showDialog, String param, List<String> pathList, HttpInterface httpInterface) {
         List<MultipartBody.Part> parts = new ArrayList<>(pathList.size());
         for (String filePath : pathList) {
             if (TextUtils.isEmpty(filePath)) {
@@ -189,8 +207,10 @@ public class BaseHttp {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(viewModel)
                 .doOnSubscribe(disposable -> {
-                    viewModel.showDialog("加载中...");
+                    if (showDialog) {
+                        viewModel.showDialog("加载中...");
+                    }
                 })
-                .subscribe(new AbsAPICallback<>(httpInterface));
+                .subscribe(new AbsAPICallback<>(httpInterface,viewModel));
     }
 }

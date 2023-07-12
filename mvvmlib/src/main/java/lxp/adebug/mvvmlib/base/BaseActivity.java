@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import lxp.adebug.mvvmlib.base.BaseViewModel.ParameterField;
 import lxp.adebug.mvvmlib.bus.Messenger;
 import lxp.adebug.mvvmlib.utils.MaterialDialogUtils;
+import lxp.adebug.mvvmlib.widget.LoadProgressDialog;
 
 
 /**
@@ -33,7 +34,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     protected V binding;
     protected VM viewModel;
     private int viewModelId;
-    private MaterialDialog dialog;
+    private LoadProgressDialog mLoadProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,19 +156,23 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         });
     }
 
-    public void showDialog(String title) {
-        if (dialog != null) {
-            dialog = dialog.getBuilder().title(title).build();
-            dialog.show();
-        } else {
-            MaterialDialog.Builder builder = MaterialDialogUtils.showIndeterminateProgressDialog(this, title, false);
-            dialog = builder.show();
+    public void showDialog(String text) {
+        if (mLoadProgressDialog == null) {
+            mLoadProgressDialog = new LoadProgressDialog(this);
         }
+        if (mLoadProgressDialog.isShowing()) {
+            return;
+        }
+        mLoadProgressDialog.setText(text);
+        mLoadProgressDialog.show();
     }
 
     public void dismissDialog() {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
+        if (mLoadProgressDialog == null) {
+            return;
+        }
+        if (mLoadProgressDialog.isShowing()) {
+            mLoadProgressDialog.dismiss();
         }
     }
 

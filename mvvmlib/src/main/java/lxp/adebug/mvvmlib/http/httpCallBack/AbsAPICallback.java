@@ -1,8 +1,6 @@
 package lxp.adebug.mvvmlib.http.httpCallBack;
 
-import android.content.Context;
 import android.net.ParseException;
-import android.widget.Toast;
 
 import com.google.gson.JsonParseException;
 
@@ -12,8 +10,9 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 import io.reactivex.observers.DisposableObserver;
+import lxp.adebug.mvvmlib.base.BaseViewModel;
 import lxp.adebug.mvvmlib.http.lxp.ResultException;
-import lxp.adebug.mvvmlib.utils.Utils;
+import lxp.adebug.mvvmlib.utils.ToastUtils;
 import retrofit2.HttpException;
 
 
@@ -24,7 +23,7 @@ import retrofit2.HttpException;
 public class AbsAPICallback<T> extends DisposableObserver<T> {
 
     private HttpInterface httpInterface;
-    private static Context mContext = Utils.getContext();
+    private BaseViewModel viewModel;
     private static final int UNAUTHORIZED = 401;
     private static final int FORBIDDEN = 403;
     private static final int NOT_FOUND = 404;
@@ -34,8 +33,9 @@ public class AbsAPICallback<T> extends DisposableObserver<T> {
     private static final int SERVICE_UNAVAILABLE = 503;
     private static final int GATEWAY_TIMEOUT = 504;
 
-    public AbsAPICallback(HttpInterface httpInterface) {
+    public AbsAPICallback(HttpInterface httpInterface, BaseViewModel viewModel) {
         this.httpInterface = httpInterface;
+        this.viewModel = viewModel;
     }
 
     @Override
@@ -57,29 +57,29 @@ public class AbsAPICallback<T> extends DisposableObserver<T> {
                 case BAD_GATEWAY:
                 case SERVICE_UNAVAILABLE:
                 default:
-                    Toast.makeText(mContext, httpException.code() + ":" + httpException.getMessage(), Toast.LENGTH_SHORT).show();
+                    ToastUtils.showShortSafe(httpException.code() + ":" + httpException.getMessage());
                     break;
             }
         } else if (e instanceof SocketTimeoutException) {
             SocketTimeoutException exception = (SocketTimeoutException) e;
-            Toast.makeText(mContext, exception.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtils.showShortSafe(exception.getMessage());
         } else if (e instanceof ResultException) {
             ResultException resultException = (ResultException) e;
-            Toast.makeText(mContext, resultException.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtils.showShortSafe(resultException.getMessage());
         } else if (e instanceof JsonParseException) {
             JsonParseException parseException = (JsonParseException) e;
-            Toast.makeText(mContext, parseException.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtils.showShortSafe(parseException.getMessage());
         } else if (e instanceof JSONException) {
             JSONException jsonException = (JSONException) e;
-            Toast.makeText(mContext, jsonException.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtils.showShortSafe(jsonException.getMessage());
         } else if (e instanceof ParseException) {
             ParseException parseException = (ParseException) e;
-            Toast.makeText(mContext, parseException.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtils.showShortSafe(parseException.getMessage());
         } else if (e instanceof ConnectException) {
             ConnectException connectException = (ConnectException) e;
-            Toast.makeText(mContext, connectException.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtils.showShortSafe(connectException.getMessage());
         } else {
-            Toast.makeText(mContext, "Unknown error, please try again", Toast.LENGTH_SHORT).show();
+            ToastUtils.showShortSafe("Unknown error, please try again");
         }
         if (e instanceof ResultException) {
             ResultException resultException = (ResultException) e;
@@ -90,16 +90,20 @@ public class AbsAPICallback<T> extends DisposableObserver<T> {
         } else {
             httpInterface.onFailed(0, e);
         }
+        onComplete();
     }
 
     @Override
     public void onComplete() {
-        httpInterface.onComplete();
+        if (viewModel != null) {
+            viewModel.dismissDialog();
+        }
     }
 
 
     @Override
     public void onNext(T t) {
         httpInterface.onSuccess(t.toString());
+        onComplete();
     }
 }

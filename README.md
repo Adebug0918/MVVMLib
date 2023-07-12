@@ -12,15 +12,9 @@
 
 **注：** 
 
-[3.x：Support版（最后版本：3.1.6）](https://github.com/goldze/MVVMHabit/tree/20210716_v3.1.6_android) 
-
 [4.x：AndroidX版（最后版本：4.0.0）](https://github.com/goldze/MVVMHabit) 建议使用当前版本
 
 > **原文地址：** [https://github.com/goldze/MVVMHabit](https://github.com/goldze/MVVMHabit)
-
-②群 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=V3luKUW7"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="MVVMHabit-Family2" title="MVVMHabit-Family2"></a>
-
-①群 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Fv9et98F"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="MVVMHabit-Family" title="MVVMHabit-Family"></a>（已满）
 
 # MVVMHabit
 ##
@@ -66,9 +60,10 @@
 ### 1.1、启用databinding
 在主工程app的build.gradle的android {}中加入：
 ```gradle
-dataBinding {
-    enabled true
-}
+ buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
 ```
 ### 1.2、依赖Library
 从远程依赖：
@@ -88,7 +83,8 @@ allprojects {
 ```gradle
 dependencies {
     ...
-    implementation 'com.github.goldze:MVVMHabit:4.0.0'
+    implementation 'com.github.goldze:MVVMHabit:4.0.0'//原库
+    implementation 'com.github.Adebug0918:MVVMLib:1.0.3' //当前库
 }
 ```
 或
@@ -97,7 +93,8 @@ dependencies {
 ```gradle
 dependencies {	
     ...
-    implementation project(':mvvmhabit')
+    implementation project(':mvvmhabit')//原库
+    implementation project(':MVVMLib') //当前库
 }
 ```
 
@@ -152,6 +149,28 @@ CaocConfig.Builder.create()
     //.errorActivity(YourCustomErrorActivity.class) //崩溃后的错误activity
     //.eventListener(new YourCustomEventListener()) //崩溃后的错误监听
     .apply();
+
+====================================================================================================
+		
+		LibConfig.Builder.create()
+		.backgroundMode(LibConfig.BACKGROUND_MODE_SILENT) //背景模式,开启沉浸式
+		.enabled(true) //是否启动全局异常捕获
+		.showErrorDetails(true) //是否显示错误详细信息
+		.showRestartButton(true) //是否显示重启按钮
+		.trackActivities(true) //是否跟踪Activity
+		.minTimeBetweenCrashesMs(2000) //崩溃的间隔时间(毫秒)
+		.errorDrawable(R.mipmap.ic_launcher) //错误图标
+		.restartActivity(MainActivity.class) //重新启动后的activity
+//                .errorActivity(YourCustomErrorActivity.class) //崩溃后的错误activity
+		//.eventListener(new YourCustomEventListener()) //崩溃后的错误监听
+		.apply();
+		HashMap<String, Object> header = new HashMap<>();
+		header.put("deviceVersion", android.os.Build.VERSION.RELEASE);
+		header.put("device", android.os.Build.DEVICE);
+		header.put("model", android.os.Build.MODEL);
+		header.put("requestSource", "app");
+		header.put("自定义", "自定义");
+		BaseHttp.init("服务器地址", header);
 ```
 
 ## 2、快速上手
@@ -213,7 +232,7 @@ initVariableId() 返回变量的id，对应activity_login中name="viewModel"，�
 ```java
 @Override
 public LoginViewModel initViewModel() {
-    //View持有ViewModel的引用，如果没有特殊业务处理，这个方法可以不重写
+    //View持有ViewModel的引用，如果没有特殊业务处理，这个方法可以不重写 
     return ViewModelProviders.of(this).get(LoginViewModel.class);
 }
 ```
@@ -418,7 +437,27 @@ layoutManager控制是线性(包含水平和垂直)排列还是网格排列，li
 > 网络请求一直都是一个项目的核心，现在的项目基本都离不开网络，一个好用网络请求框架可以让开发事半功倍。
 #### 2.3.1、Retrofit+Okhttp+RxJava
 > 现今，这三个组合基本是网络请求的标配，如果你对这三个框架不了解，建议先去查阅相关资料。
+```  已构建retorfit 封装get postAPI 详细内容看BaseHttp 返回字段判空 返回数据验证 请求默认开启dialog  
+  HashMap<String, Object> map = new HashMap<>();
+        map.put("参数名", "传值");
+        BaseHttp.getInstance(this).post("接口路径",true, map, new HttpInterface() {
+            @Override
+            public void onSuccess(String data) {
+                BaseResponse response = GsonUtil.parseJson(data, BaseResponse.class);
+                Log.i("TAG", "onSuccess: " + response.getResult());
+            }
 
+            @Override
+            public void onFailed(int code, Throwable e) {
+                Log.i("TAG", "onFailed: " + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                dismissDialog();
+            }
+        });
+```        
 square出品的框架，用起来确实非常方便。**MVVMHabit**中引入了
 ```gradle
 api "com.squareup.okhttp3:okhttp:3.10.0"

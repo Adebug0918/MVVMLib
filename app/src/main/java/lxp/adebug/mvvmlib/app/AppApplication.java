@@ -4,19 +4,17 @@ import android.os.Build;
 
 import com.goldze.mvvmhabit.BuildConfig;
 import com.goldze.mvvmhabit.R;
-
-import lxp.adebug.mvvmlib.http.lxp.BaseHttp;
-import lxp.adebug.mvvmlib.ui.login.LoginActivity;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.HashMap;
 
 import lxp.adebug.mvvmlib.base.BaseApplication;
 import lxp.adebug.mvvmlib.crash.LibConfig;
+import lxp.adebug.mvvmlib.http.lxp.BaseHttp;
+import lxp.adebug.mvvmlib.ui.login.LoginActivity;
 import lxp.adebug.mvvmlib.utils.KLog;
 
 /**
- *
  * @author Adebug
  * @date 2017/7/16
  */
@@ -48,13 +46,15 @@ public class AppApplication extends BaseApplication {
 //                .errorActivity(YourCustomErrorActivity.class) //崩溃后的错误activity
 //                .eventListener(new YourCustomEventListener()) //崩溃后的错误监听
                 .apply();
-        HashMap<String,Object> header = new HashMap<>();
+        httpCode = 200;//默认200 后台接口验证成功code
+        fieldCode = "code";//后台返回字段名 默认code
+        fieldMessage = "message";//后台返回字段名 默认message
+        HashMap<String, Object> header = new HashMap<>();
         header.put("model", Build.MODEL);
-        header.put("brand",Build.BRAND);
-        header.put("release",Build.VERSION.RELEASE);
-        header.put("hardware",Build.HARDWARE);
-        header.put("custom","custom");
-        header.put("Token","token");
-        BaseHttp.init("https://www.baidu.com",header);
+        header.put("brand", Build.BRAND);
+        header.put("release", Build.VERSION.RELEASE);
+        header.put("hardware", Build.HARDWARE);
+        header.put("custom", "custom");//自定义header头参数
+        BaseHttp.init("https://www.baidu.com", header);
     }
 }

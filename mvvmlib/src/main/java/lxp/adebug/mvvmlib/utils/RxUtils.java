@@ -91,8 +91,9 @@ public class RxUtils {
     private static class HandleFuc<T> implements Function<BaseResponse<T>, T> {
         @Override
         public T apply(BaseResponse<T> response) {
-            if (!response.isOk())
+            if (!response.isOk()) {
                 throw new RuntimeException(!"".equals(response.getCode() + "" + response.getMessage()) ? response.getMessage() : "");
+            }
             return response.getResult();
         }
     }
